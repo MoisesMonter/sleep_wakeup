@@ -8,7 +8,7 @@
 pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
 pthread_cond_t cond = PTHREAD_COND_INITIALIZER;
 
-// Função auxiliar da thread
+'''Função auxiliar da thread'''
 void* funcaoHelper(void* idThread) {
     long tid = (long) idThread; // Convertendo para o tipo correto
     
@@ -33,10 +33,10 @@ int main(int argc, char *argv[]) {
     int statusRetorno;
     void *statusFinalizacao;
     
-    // Inicializar gerador de números aleatórios
+    //Inicializar gerador de números aleatórios
     srand((unsigned int)time(NULL));
 
-    // Criar as threads
+    //Criar as threads
     for (long i = 0; i < NUM_THREADS; i++) {
         statusRetorno = pthread_create(&vetorThreads[i], NULL, funcaoHelper, (void *)i);
         if (statusRetorno) {
@@ -45,13 +45,13 @@ int main(int argc, char *argv[]) {
         }
     }
 
-    // Aguardar até que todas as threads estejam "dormindo"
+    '''Aguardar até que todas as threads estejam "dormindo"'''
     pthread_mutex_lock(&mutex);
     printf("Thread principal aguardando todas as threads dormirem...\n");
     pthread_cond_wait(&cond, &mutex);
     pthread_mutex_unlock(&mutex);
 
-    // Realizando um join com todas as threads
+    '''Realizando um join com todas as threads'''
     for (int i = 0; i < NUM_THREADS; i++) {
         statusRetorno = pthread_join(vetorThreads[i], &statusFinalizacao);
         if (statusRetorno) {
